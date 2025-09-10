@@ -70,15 +70,20 @@ function renderLocs(locs) {
 
 function onRemoveLoc(locId) {
     locService.remove(locId)
-        .then(() => {
+    const message = Swal.fire({
+        title: 'Are you sure?',
+        showDenyButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
             flashMsg('Location removed')
             unDisplayLoc()
             loadAndRenderLocs()
-        })
-        .catch(err => {
-            console.error('OOPs:', err)
-            flashMsg('Cannot remove location')
-        })
+        }
+    }).catch(err => {
+        console.error('OOPs:', err)
+        flashMsg('Cannot remove location')
+    })
+
 }
 
 function onSearchAddress(ev) {
@@ -223,7 +228,7 @@ function getFilterByFromQueryParams() {
     const queryParams = new URLSearchParams(window.location.search)
     const txt = queryParams.get('txt') || ''
     const minRate = queryParams.get('minRate') || 0
-    locService.setFilterBy({txt, minRate})
+    locService.setFilterBy({ txt, minRate })
 
     document.querySelector('input[name="filter-by-txt"]').value = txt
     document.querySelector('input[name="filter-by-rate"]').value = minRate

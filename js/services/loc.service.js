@@ -21,6 +21,7 @@ var gSortBy = { rate: -1 }
 var gFilterBy = { txt: '', minRate: 0 }
 var gPageIdx
 
+
 _createLocs()
 
 export const locService = {
@@ -32,6 +33,7 @@ export const locService = {
     setSortBy,
     getLocCountByRateMap
 }
+
 
 function query() {
     return storageService.query(DB_KEY)
